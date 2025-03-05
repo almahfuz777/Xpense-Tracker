@@ -1,16 +1,22 @@
 <?php
-require_once APP_PATH . '/core/Database.php';
-
 class User{
     private $conn;
+
     public function __construct(){
-        $this->conn = Database::getInstance();
+        $this->conn = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);   
+
+        if($this->conn->connect_error){
+            die("Database connection error: " . $this->conn->connect_error);
+        }
+        // echo "Database connection successful";
     }
 
     // Check if the email already exists
     public function checkUsernameExists($username) {
         $stmt = $this->conn->prepare("SELECT id FROM users WHERE username = ?");
-        if (!$stmt) return false;
+        if (!$stmt) {
+            return "Database preparation error: " . $this->conn->error;
+        }
 
         $stmt->bind_param("s", $username);
         $stmt->execute();
@@ -23,7 +29,9 @@ class User{
     // Check if the email already exists
     public function checkEmailExists($email) {
         $stmt = $this->conn->prepare("SELECT id FROM users WHERE email = ?");
-        if (!$stmt) return false;
+        if (!$stmt) {
+            return "Database preparation error: " . $this->conn->error;
+        }
 
         $stmt->bind_param("s", $email);
         $stmt->execute();
@@ -40,7 +48,9 @@ class User{
         
         // Insert new user record
         $stmt = $this->conn->prepare("INSERT INTO users (username, email, password) VALUES (?, ?, ?)");
-        if (!$stmt) return false;
+        if (!$stmt) {
+            return "Database preparation error: " . $this->conn->error;
+        }
 
         $stmt->bind_param("sss", $username, $email, $hashedPassword);
 
@@ -52,13 +62,15 @@ class User{
         else{
             $error = $stmt->error;
             $stmt->close();
-            return false;
+            return "Error: " . $error;
         }
     }
 
     public function login($email, $password){
         $stmt = $this->conn->prepare("SELECT * FROM users WHERE email = ?");
-        if (!$stmt) return false;
+        if (!$stmt) {
+            return "Database preparation error: " . $this->conn->error;
+        }
 
         $stmt->bind_param("s", $email);
         $stmt->execute();
@@ -106,6 +118,13 @@ class User{
     //         return "User not found.";
     //     }   
     // }
+
+    // Destructor to close the database connection
+    public function __destruct(){
+        if($this->conn){
+            $this->conn->close();
+        }
+    }
 
 }
 ?>

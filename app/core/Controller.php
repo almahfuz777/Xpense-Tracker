@@ -1,18 +1,23 @@
 <?php
 // app/core/Controller.php
 require_once __DIR__ . '/../config/config.php';
-/*
-- Base Controller class to load models and views in controllers. 
-- This class will be extended by all other controllers.
-- It contains two methods: loadModel() and loadView()
-- loadModel() is used to load a model file and return an instance of the model
-- loadView() is used to load a view file and pass data to it
-*/
+
+// Base Controller class to load models and views in controllers 
+// This class will be extended by all other controllers
+// It contains two methods: loadModel() and loadView()
+// loadModel() is used to load a model file and return an instance of the model
+// loadView() is used to load a view file and pass data to it
+// The loadView() method accepts an optional second parameter to pass data to the view
+// The data parameter is an associative array where the keys are the variable names and the values are the data to be passed to the view
+// The loadView() method will extract the data array into individual variables that can be used in the view
+// This allows the controller to pass data to the view without explicitly defining each variable
+// This is a common pattern in MVC frameworks to keep the controller code clean and decoupled from the view
+
 class Controller {
     // Base Controller Constructor, runs before any child controller method is called
     public function __construct(){
         // Start session once for the whole site
-        if(session_status() === PHP_SESSION_NONE) {
+        if(session_status() == PHP_SESSION_NONE){
             session_start();
         }
     }
@@ -31,7 +36,6 @@ class Controller {
     public function loadView($view, $data = []) {
         $viewPath = VIEW_PATH . '/' . $view . '.php';
         if(file_exists($viewPath)) {
-            $data['isLoggedIn'] = isset($_SESSION['user_id']);  // Check if user is logged in             
             extract($data);
             require_once $viewPath;
         } 
