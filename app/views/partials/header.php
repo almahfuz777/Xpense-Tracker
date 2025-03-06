@@ -5,19 +5,30 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <base href="<?= BASE_URL; ?>">
-    <title><?= isset($title) ? htmlspecialchars($title) : 'Xpense Tracker'; ?></title>
+    <title><?= isset($pageTitle) ? htmlspecialchars($pageTitle) : 'Xpense Tracker'; ?></title>
+
+    <!-- Global Styles -->
     <link rel="stylesheet" href="public/assets/css/style.css">
+    <!-- Page-Specific CSS -->
+    <?php if (isset($page) && file_exists(__DIR__ . "/../../../public/assets/css/{$page}.css")): ?>
+        <link rel="stylesheet" href="<?= BASE_URL ?>public/assets/css/<?= $page ?>.css">
+    <?php endif; ?>
 </head>
+
 <body>
 <header>
     <nav>
-        <ul>
-            <li><a href="app/controllers/DashboardController.php">Dashboard</a></li>
-            <li><a href="app/controllers/LoginController.php">Login</a></li>
-            <li><a href="app/controllers/SignupController.php">Sign Up</a></li>
-            <li><a href="app/controllers/DashboardController.php">Profile</a></li>
-            <li><a href="app/controllers/LogoutController.php">Logout</a></li>        
+        <div class="logo">
+            <a href="public/">Xpense Tracker</a>
+        </div>
+        <ul class="nav-links">  
+            <?php if (!$isLoggedIn) : ?>
+                <li><a href="app/controllers/LoginController.php">Login</a></li>
+                <li><a href="app/controllers/SignupController.php">Sign Up</a></li>
+            <?php else: ?>
+                <li><a href="#">Profile</a></li>
+                <li><a href="app/controllers/LogoutController.php">Logout</a></li>        
+            <?php endif; ?>
         </ul>
     </nav>
 </header>
-

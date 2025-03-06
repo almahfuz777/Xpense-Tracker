@@ -1,0 +1,103 @@
+/* CSS Reset */
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* CSS Variables for Consistency */
+:root {
+    --bg-color: #2c3e50;
+    --bg-light: #34495e;
+    --text-color: #fff;
+    --btn-color: #1abc9c;
+    --btn-hover: #16a085;
+    --transition-speed: 0.3s;
+}
+
+html{
+    font-size: 16px; /* Base font size */
+}
+
+body{
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(135deg, var(--bg-color), var(--bg-light));
+    color: var(--text-color);
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    line-height: 1.5;
+}
+
+/* --------------- Header --------------- */
+header{
+    width: 100%;
+    background-color: var(--bg-color);
+    position: fixed;
+    top: 0;
+    z-index: 1000;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+/* Navbar Styling */
+nav{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 1.5rem;
+    height: 4rem;
+}
+
+body {
+    padding-top: 4rem; /* to prevent content being hidden under fixed nav */
+}
+
+.logo a{
+    color: var(--text-color);
+    font-size: 1.5rem;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+/* Navigation Links */
+.nav-links{
+    display: flex;
+    list-style: none;
+}
+.nav-links li{
+    margin-right: 1rem;
+}
+.nav-links li a {
+    color: var(--text-color);
+    text-decoration: none;
+    font-size: 1rem;
+    padding: .5rem 1rem;
+    border-radius: .25rem;
+    transition: background var(--transition-speed);
+}
+.nav-links li a:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+/* --------------- Footer --------------- */
+footer {
+    text-align: center;
+    padding: 1rem;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    margin-top: auto;
+}
+
+/* --------------- General Styling --------------- */
+/* buttons */
+.btn{
+    background: var(--btn-color);
+    color: var(--text-color);
+    border: none;
+    border-radius: .25rem;
+    cursor: pointer;
+    transition: background var(--transition-speed);
+    text-decoration: none;
+}
+.btn:hover{
+    background: var(--btn-hover);
+}
