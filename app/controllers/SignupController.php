@@ -8,7 +8,11 @@ require_once MODEL_PATH . '/User.php';
 class SignupController extends Controller{
     // Default method to load the dashboard view
     public function index(){
-        $this->loadView('auth/signup');
+        $data = [
+            'pageTitle' => 'Sign Up | XpenseTracker',
+            'page' => 'authentication',
+        ];
+        $this->loadView('auth/signup', $data);
     }
 
     // Handle form submission and user registration
