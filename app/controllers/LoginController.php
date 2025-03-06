@@ -14,7 +14,12 @@ class LoginController extends Controller {
             unset($_SESSION['message']);        // Clear the message after retrieving it
         }
         // Pass the message to the view
-        $data = ['message' => $message];
+        $data = [
+            'pageTitle' => 'Login | XpenseTracker',
+            'page' => 'authentication',
+            'message' => $message,
+        ];
+
         $this->loadView('auth/login', $data);
     }
 
@@ -40,6 +45,8 @@ class LoginController extends Controller {
                 // Store user information in session
                 $_SESSION['user_id'] = $user['id'];
                 $_SESSION['username'] = $user['username'];
+                
+                // Redirect to dashboard
                 header('Location: ' . BASE_URL . 'app/controllers/DashboardController.php');
                 exit();
             } 
