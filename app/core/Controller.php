@@ -17,6 +17,15 @@ class Controller {
         }
     }
 
+    // Authenticate user before loading restricted pages
+    protected function requireLogin(){
+        if (!isset($_SESSION['user_id'])) {
+            $_SESSION['message'] = "You must log in first.";
+            header('Location: ' . BASE_URL . 'app/controllers/LoginController.php');
+            exit();
+        }
+    }
+
     public function loadModel($model) {
         $modelPath = MODEL_PATH . '/' . $model . '.php';
         if(file_exists($modelPath)) {
@@ -30,8 +39,14 @@ class Controller {
 
     public function loadView($view, $data = []) {
         $viewPath = VIEW_PATH . '/' . $view . '.php';
+
+        // pass data to all views
+
+
         if(file_exists($viewPath)) {
-            $data['isLoggedIn'] = isset($_SESSION['user_id']);  // Check if user is logged in             
+            $data['isLoggedIn'] = isset($_SESSION['user_id']);
+            $data['username'] = isset($_SESSION['username']) ? $_SESSION['username'] : 'User';
+            
             extract($data);
             require_once $viewPath;
         } 

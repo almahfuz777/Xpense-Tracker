@@ -8,10 +8,16 @@
     <title><?= isset($pageTitle) ? htmlspecialchars($pageTitle) : 'Xpense Tracker'; ?></title>
 
     <!-- Global Styles -->
-    <link rel="stylesheet" href="public/assets/css/style.css">
+    <link rel="stylesheet" href="<?= BASE_URL ?>public/assets/css/style.css">
+    
     <!-- Page-Specific CSS -->
-    <?php if (isset($page) && file_exists(__DIR__ . "/../../../public/assets/css/{$page}.css")): ?>
+    <?php if (isset($page) && file_exists(PUBLIC_PATH . "/assets/css/{$page}.css")): ?>
         <link rel="stylesheet" href="<?= BASE_URL ?>public/assets/css/<?= $page ?>.css">
+    <?php endif; ?>
+
+    <!-- Sidebar CSS if user is logged in -->
+    <?php if (isset($_SESSION['user_id'])): ?>
+        <link rel="stylesheet" href="<?= BASE_URL ?>public/assets/css/sidebar.css">
     <?php endif; ?>
 </head>
 

@@ -13,6 +13,7 @@
     --btn-color: #1abc9c;
     --btn-hover: #16a085;
     --transition-speed: 0.3s;
+    --max-width: 1450px;
 }
 
 html{
@@ -76,6 +77,18 @@ body {
 }
 .nav-links li a:hover {
     background: rgba(255, 255, 255, 0.2);
+}
+
+/* --------------- Main Area --------------- */
+main{
+    /* border: red 1px solid; */
+    width: 100%;
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding: 1.25rem;
+
+    display: flex;
+    flex-direction: column;
 }
 
 /* --------------- Footer --------------- */
