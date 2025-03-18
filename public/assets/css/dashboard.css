@@ -1,0 +1,137 @@
+/* -------------- Dashboard Layout -------------- */
+.dashboard-container {
+    flex-direction: row;
+    gap: 1.25rem;
+}
+
+/* Dashboard Content */
+.dashboard-content {
+    flex-grow: 1;
+    background: #EDEFEF;
+    padding: 1.5rem;
+    border-radius: 0.5rem;
+    box-shadow: 0 0.25rem 0.5rem rgba(0, 0, 0, 0.1);
+}
+
+/* -------------- Balance & Accounts -------------- */
+.balance-section {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+.stat-box {
+    background: var(--bg-light);
+    color: var(--text-color);
+    padding: 1.5rem;
+    border-radius: 0.5rem;
+    width: 23%;
+    text-align: center;
+    box-shadow: 0 0.125rem 0.3125rem rgba(0, 0, 0, 0.1);
+}
+
+/* -------------- Cash Flow Section -------------- */
+.cash-flow {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #ecf0f1;
+    color: black;
+    padding: 1.5rem;
+    border-radius: 0.5rem;
+    gap: 1.5rem;
+    margin: 1.5rem 0;
+    box-shadow: 0 0.25rem 0.5rem rgba(0, 0, 0, 0.1);
+}
+/* -------------- Individual Columns -------------- */
+.cash-flow-column {
+    flex: 1;
+    text-align: center;
+    padding: 1rem;
+    border-radius: 0.5rem;
+}
+/* Title + Select Dropdown */
+.cash-flow-title {
+    background: #F0EFE7;
+}
+.cash-flow-title h3 {
+    margin-bottom: 0.5rem;
+}
+.cash-flow-title select {
+    padding: 0.5rem;
+    font-size: 1rem;
+    border-radius: 0.3125rem;
+    border: 1px solid #ddd;
+    background: white;
+    color: black;
+}
+/* Income Column */
+.cash-flow-income {
+    background: rgba(46, 204, 113, 0.2);
+    color: var(--btn-color);
+}
+
+/* Expense Column */
+.cash-flow-expense {
+    background: rgba(231, 76, 60, 0.2);
+    color: #e74c3c;
+}
+/* Cash Amount Styling */
+.cash-amount {
+    font-size: 1.75rem;
+    font-weight: bold;
+}
+
+/* -------------- Pie Chart -------------- */
+canvas {
+    width: 100% !important;
+    max-height: 200px;
+    margin-top: 20px;
+}
+
+/* -------------- Transactions Table -------------- */
+.recent-transactions {
+    margin-top: 1.25rem;
+}
+.recent-transactions h3 {
+    color: var(--bg-color);
+    margin-bottom: 0.625rem;
+}
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+table th, table td {
+    padding: 0.75rem;
+    border: 1px solid #ddd;
+    text-align: left;
+    color: black;
+}
+table th {
+    background: var(--bg-color);
+    color: white;
+}
+table tr:nth-child(even) {
+    background: #f8f9fa;
+}
+table tr:hover {
+    background: #e9ecef;
+}
+.income {
+    color: #1abc9c;
+    font-weight: bold;
+}
+.expense {
+    color: #e74c3c;
+    font-weight: bold;
+}
+.see-more {
+    display: inline-block;
+    margin-top: 0.625rem;
+    color: var(--btn-color);
+    text-decoration: none;
+    font-weight: bold;
+}
+.see-more:hover {
+    text-decoration: underline;
+}
