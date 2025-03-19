@@ -86,26 +86,23 @@ class User{
         }
     }
 
-    // public function getUserById($id){
-    //     $stmt = $this->conn->prepare("SELECT * FROM users WHERE id = ?");
-    //     if (!$stmt) {
-    //         return "Database preparation error: " . $this->conn->error;
-    //     }
-
-    //     $stmt->bind_param("i", $id);
-    //     $stmt->execute();
-    //     $result = $stmt->get_result();
-
-    //     if($stmt->num_rows===1){
-    //         $user = $result->fetch_assoc();
-    //         $stmt->close();
-    //         return $user;
-    //     }
-    //     else{
-    //         $stmt->close();
-    //         return "User not found.";
-    //     }   
-    // }
+    public function getUserById($id){
+        $stmt = $this->conn->prepare("SELECT id, username FROM users WHERE id = ?");
+        if (!$stmt) return false;
+    
+        $stmt->bind_param("i", $id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+    
+        if ($result->num_rows === 1) {
+            $user = $result->fetch_assoc();
+            $stmt->close();
+            return $user;
+        } else {
+            $stmt->close();
+            return false;
+        }
+    }
 
 }
 ?>
