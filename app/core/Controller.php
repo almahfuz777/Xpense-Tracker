@@ -20,6 +20,18 @@ class Controller {
     // Authenticate user before loading restricted pages
     protected function requireLogin(){
         if (!isset($_SESSION['user_id'])) {
+            // Check if remember me cookie is set
+            if(isset($_COOKIE['remember_me'])){
+                $userModel = $this->loadModel('User');
+                $user = $userModel->getUserById($_COOKIE['remember_me']);
+                if($user){
+                    $_SESSION['user_id'] = $user['id'];
+                    $_SESSION['username'] = $user['username'];
+                    return;
+                }
+            }
+            
+            // If no session and no valid cookie, redirect to login
             $_SESSION['message'] = "You must log in first.";
             header('Location: ' . BASE_URL . 'app/controllers/LoginController.php');
             exit();

@@ -30,6 +30,7 @@ class LoginController extends Controller {
             $email = trim($_POST['email'] ?? '');
             $email = filter_var($email, FILTER_SANITIZE_EMAIL);
             $password = htmlspecialchars($_POST['password'] ?? '');
+            $remember = isset($_POST['remember']);
             
             // Validate form data
             if(empty($email) || empty($password)) {
@@ -45,7 +46,16 @@ class LoginController extends Controller {
                 // Store user information in session
                 $_SESSION['user_id'] = $user['id'];
                 $_SESSION['username'] = $user['username'];
-                
+
+                if($remember){
+                    setcookie("remember_me", $user['id'], [
+                        'expires' => time() + (30 * 24 * 60 * 60), // 30 days
+                        'path' => '/',  
+                        'httponly' => true,
+                        'samesite' => 'Strict',
+                    ]);
+                }
+
                 // Redirect to dashboard
                 header('Location: ' . BASE_URL . 'app/controllers/DashboardController.php');
                 exit();
