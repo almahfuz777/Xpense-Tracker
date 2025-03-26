@@ -6,11 +6,13 @@
 
     <!-- Display Errors -->
     <?php if (!empty($errors)): ?>
-        <ul style="color: red;">
-            <?php foreach ($errors as $error): ?>
-                <li><?= htmlspecialchars($error); ?></li>
-            <?php endforeach; ?>
-        </ul>
+        <div class="error-messages">
+            <ul>
+                <?php foreach ($errors as $error): ?>
+                    <li>* <?= htmlspecialchars($error); ?></li>
+                <?php endforeach; ?>
+            </ul>
+        </div>
     <?php endif; ?>
 
     <form action="<?= BASE_URL ?>app/controllers/SignupController.php?action=register" method="POST">

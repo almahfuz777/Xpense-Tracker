@@ -11,7 +11,9 @@ class SignupController extends Controller{
         $data = [
             'pageTitle' => 'Sign Up | XpenseTracker',
             'page' => 'authentication',
+            'errors' => $_SESSION['errors'] ?? [],
         ];
+        unset($_SESSION['errors']);
         $this->loadView('auth/signup', $data);
     }
 
@@ -47,8 +49,9 @@ class SignupController extends Controller{
 
             // If there are errors, reload the form with error message
             if (!empty($errors)) {
-                $this->loadView('auth/signup', ['errors' => $errors]);
-                return;
+                $_SESSION['errors'] = $errors;
+                header('Location: ' . BASE_URL . 'app/controllers/SignupController.php');
+                exit();
             }
 
             // If no errors, register the user
@@ -61,8 +64,9 @@ class SignupController extends Controller{
             }
             else{
                 // Registration failed, reload the form with error message
-                $errors[] = 'Failed to create account. Please try again.';
-                $this->loadView('auth/signup', ['errors' => $errors]);
+                $_SESSION['errors'] = ['Failed to create account. Please try again.'];
+                header('Location: ' . BASE_URL . 'app/controllers/SignupController.php');
+                exit();
             }
         }
     }
