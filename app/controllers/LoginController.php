@@ -18,8 +18,9 @@ class LoginController extends Controller {
             'pageTitle' => 'Login | XpenseTracker',
             'page' => 'authentication',
             'message' => $message,
+            'errors' => $_SESSION['errors'] ?? [],
         ];
-
+        unset($_SESSION['errors']);
         $this->loadView('auth/login', $data);
     }
 
@@ -33,10 +34,11 @@ class LoginController extends Controller {
             $remember = isset($_POST['remember']);
             
             // Validate form data
+            $errors = [];
             if(empty($email) || empty($password)) {
-                $data['message'] = 'Both fields are required.';
-                $this->loadView('auth/login', $data);
-                return;
+                $_SESSION['errors'] = ['Both fields are required.'];
+                header('Location: ' . BASE_URL . 'app/controllers/LoginController.php');
+                exit();
             }
             
             $userModel = $this->loadModel('User');
@@ -61,8 +63,9 @@ class LoginController extends Controller {
                 exit();
             } 
             else {
-                $data['message'] = 'Invalid email or password!';
-                $this->loadView('auth/login', $data);
+                $_SESSION['errors'] = ['Invalid email or password!'];
+                header('Location: ' . BASE_URL . 'app/controllers/LoginController.php');
+                exit();
             }
         }
         else{
