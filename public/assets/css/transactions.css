@@ -1,0 +1,151 @@
+/* Transactions Page Container */
+.transactions-container {
+    flex-direction: row;
+    gap: 1.25rem;
+}
+
+/* Dashboard Content */
+.content-area {
+    flex-grow: 1;
+    background: var(--accent-bg);
+    color: var(--text-color);
+    text-align: center;
+    padding: 1.5rem;
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
+    width: 100%;
+    margin: 0 auto;
+}
+
+.content-area h1 {
+    margin-bottom: 1.25rem;
+}
+
+/* Filters & Search */
+.filters {
+    display: flex;
+    justify-content: center;
+    gap: 0.625rem;
+    margin-bottom: 1.25rem;
+    flex-wrap: wrap;
+}
+
+.filters input {
+    padding: .5rem .75rem;
+    border: 1px solid var(--text-muted);
+    border-radius: var(--border-radius);
+    background: var(--secondary-bg);
+    color: var(--text-color);
+    outline: none;
+    font-size: 1rem;
+    transition: border-color var(--transition-speed);
+
+}
+.filters input::placeholder {
+    color: var(--text-muted);
+}
+.filters input:focus {
+    border-color: var(--btn-color);
+}
+
+.filter-btn {
+    text-decoration: none;
+    font-weight: 500;
+    background: var(--text-muted);
+    color: var(--text-color);
+    padding: 0.5rem 1rem;
+    border: none;
+    cursor: pointer;
+    transition: background var(--transition-speed);
+}
+
+.filter-btn:hover,
+.filter-btn.active {
+    background: var(--btn-hover);
+}
+
+/* Transactions Table */
+.transactions-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1rem;
+    font-size: 1rem;
+}
+
+.transactions-table th, .transactions-table td {
+    padding: 0.5rem;
+    border: 0.0625rem solid var(--text-muted);
+    text-align: left;
+}
+
+.transactions-table th {
+    background: var(--tab-hover);
+    color: var(--text-color);
+    font-weight: 600;
+}
+
+.transactions-table tr:nth-child(even) {
+    background: var(--secondary-bg);
+}
+
+.transactions-table tr:hover {
+    background: var(--accent-bg);
+}
+
+.income {
+    color: var(--text-green);
+}
+
+.expense {
+    color: var(--text-red);
+}
+
+/* Pagination */
+.pagination {
+    margin-top: 1.25rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.625rem;
+}
+
+.pagination button {
+    background: var(--primary-bg);
+    color: var(--text-color);
+    padding: 0.5rem 1rem;
+    font-size: .8rem;
+    border: none;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    transition: background var(--transition-speed);
+}
+
+.pagination button:hover {
+    background: var(--btn-hover);
+}
+
+.page-number {
+    font-size: 1rem;
+    font-weight: bold;
+}
+
+
+
+
+@media (max-width: 768px) {
+    .transactions-table th,
+    .transactions-table td {
+        padding: 0.5rem;
+        font-size: 0.875rem;
+    }
+
+    .filters {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .pagination {
+        flex-direction: column;
+        gap: 0.3125rem;
+    }
+}
