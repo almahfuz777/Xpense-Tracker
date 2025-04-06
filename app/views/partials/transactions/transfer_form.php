@@ -6,6 +6,7 @@
 
     <label for="from_account_id">From Account:</label>
     <select id="from_account_id" name="from_account_id" required>
+        <option value="">-- Select Account --</option>
         <?php if (!empty($accounts)) : ?>
             <?php foreach ($accounts as $account) : ?>
                 <option value="<?= htmlspecialchars($account['id']); ?>">
@@ -19,10 +20,11 @@
 
     <label for="to_account_id">To Account:</label>
     <select id="to_account_id" name="to_account_id" required>
+        <option value="">-- Select Account --</option>
         <?php if (!empty($accounts)) : ?>
             <?php foreach ($accounts as $account) : ?>
-                <option value="<?= htmlspecialchars($account['id']); ?>">
-                    <?= htmlspecialchars($account['account_name']); ?>
+                <option value="<?= htmlspecialchars($account['id']); ?>" data-account="<?= htmlspecialchars($account['id']); ?>">
+                <?= htmlspecialchars($account['account_name']); ?>
                 </option>
             <?php endforeach; ?>
         <?php else : ?>
@@ -41,3 +43,5 @@
 
     <input type="submit" value="Transfer">
 </form>
+
+<script src="<?= BASE_URL ?>public/assets/js/transfer_form.js"></script>

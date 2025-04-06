@@ -1,3 +1,8 @@
+.homepage-container{
+    flex-grow: 1;
+    justify-content: center;
+}
+
 /* Homepage Hero Section */
 .welcome-banner {
     text-align: center;

@@ -1,3 +1,4 @@
+<!-- app/models/User.php -->
 <?php
 require_once APP_PATH . '/core/Database.php';
 
@@ -47,6 +48,11 @@ class User{
         if($stmt->execute()){
             $userId = $stmt->insert_id;
             $stmt->close();
+
+            // Create user profile and default account
+            $this->createUserProfile($userId);
+            $this->addDefaultAccount($userId);
+
             return $userId;
         }
         else{
@@ -86,6 +92,35 @@ class User{
         }
     }
 
+    public function createUserProfile($userId) {
+        $defaultPicture = 'default_profile.jpg';
+    
+        $stmt = $this->conn->prepare("
+            INSERT INTO user_profiles (
+                user_id, fname, lname, gender, date_of_birth, profile_picture, phone, address
+            ) VALUES (?, NULL, NULL, NULL, NULL, ?, NULL, NULL)
+        ");
+        
+        if (!$stmt) return false;
+    
+        $stmt->bind_param("is", $userId, $defaultPicture);
+        $stmt->execute();
+        $stmt->close();
+    
+        return true;
+    }
+    
+
+    public function addDefaultAccount($userId) {
+        $stmt = $this->conn->prepare("INSERT INTO accounts (user_id, account_name, balance) VALUES (?, 'Cash', 0.00)");
+        if (!$stmt) return false;
+    
+        $stmt->bind_param("i", $userId);
+        $stmt->execute();
+        $stmt->close();
+    }
+    
+
     public function getUserById($id){
         $stmt = $this->conn->prepare("SELECT id, username FROM users WHERE id = ?");
         if (!$stmt) return false;
@@ -102,6 +137,21 @@ class User{
             $stmt->close();
             return false;
         }
+    }
+
+    public function getProfilePicture($userId) {
+        $stmt = $this->conn->prepare("SELECT profile_picture FROM user_profiles WHERE user_id = ?");
+        if (!$stmt) return 'default_profile.jpg'; // fallback if query fails
+    
+        $stmt->bind_param("i", $userId);
+    
+        $profilePicture = null;
+        $stmt->execute();
+        $stmt->bind_result($profilePicture);
+        $stmt->fetch();
+        $stmt->close();
+    
+        return $profilePicture ?: 'default_profile.jpg';
     }
 
 }

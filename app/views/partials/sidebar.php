@@ -1,7 +1,7 @@
 <aside class="sidebar">
     <div class="profile-section">
         <div class="profile-pic">
-            <img src="<?= BASE_URL ?>public/assets/images/demo_profile.jpg" alt="Profile Picture">
+            <img src="<?= BASE_URL ?>public/assets/images/uploads/<?= htmlspecialchars($profilePicture); ?>" alt="Profile Picture">
         </div>
         <p><?= htmlspecialchars($username); ?></p>
     </div>

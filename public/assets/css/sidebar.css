@@ -1,7 +1,7 @@
 /* -------------- Sidebar -------------- */
 .sidebar {
     width: 250px;
-    background: #222f3d;
+    background: var(--accent-bg);
     padding: 20px;
     border-radius: 8px;
     display: flex;
