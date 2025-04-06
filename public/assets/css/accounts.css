@@ -1,0 +1,120 @@
+/* ================= Container Layout ============== */
+.accounts-container {
+    flex-direction: row;
+    gap: 1.25rem;
+}
+
+.content-area {
+    flex-grow: 1;
+    background: var(--accent-bg);
+    color: var(--text-color);
+    text-align: center;
+    padding: 1.5rem;
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
+    width: 100%;
+    margin: 0 auto;
+}
+
+/* Headings */
+.content-area h1 {
+    margin-bottom: 1.25rem;
+}
+
+.content-area h2 {
+    font-size: 1.25rem;
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+}
+
+/* ================= Table Styling ============== */
+.accounts-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1rem;
+    font-size: 1rem;
+}
+
+.accounts-table thead {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+}
+
+.accounts-table th, .accounts-table td {
+    padding: 0.5rem;
+    border: 0.0625rem solid var(--text-muted);
+    text-align: left;
+}
+
+.accounts-table th {
+    background: var(--tab-hover);
+    color: var(--text-color);
+    font-weight: 600;
+}
+
+.accounts-table tbody tr:nth-child(even) {
+    background: var(--secondary-bg);
+}
+
+/* Delete Button */
+.delete-btn {
+    background-color: var(--text-red);
+    color: var(--text-color);
+    font-weight: 550;
+    border: none;
+    padding: 0.5rem 0.75rem;
+    border-radius: .25rem;
+    cursor: pointer;
+    transition: background var(--transition-speed);
+}
+
+.delete-btn:hover {
+    background: #c82333;
+}
+
+/* ================= Add Account Form ============== */
+.add-account-form {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    justify-content: center;
+    background: var(--secondary-bg);
+    padding: 1.25rem;
+    box-shadow: var(--shadow);
+    margin-top: 1rem;
+    border: 0.0625rem solid var(--text-muted);
+}
+
+.add-account-form input[type="text"],
+.add-account-form input[type="number"] {
+    padding: 0.625rem;
+    border: 0.0625rem solid var(--text-muted);
+    border-radius: var(--border-radius);
+    background: var(--accent-bg);
+    color: var(--text-color);
+    font-size: 1rem;
+    transition: border-color var(--transition-speed);
+}
+
+.add-account-form input[type="text"]:focus,
+.add-account-form input[type="number"]:focus {
+    outline: none;
+    border-color: var(--btn-color);
+    box-shadow: 0 0 5px rgba(26, 188, 156, 0.5);
+}
+
+.add-account-form input[type="submit"] {
+    background-color: var(--btn-color);
+    color: #fff;
+    border: none;
+    padding: 0.75rem;
+    font-size: 1rem;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    /* width: 100%; */
+    transition: background var(--transition-speed);
+}
+
+.add-account-form input[type="submit"]:hover {
+    background-color: var(--btn-hover);
+}
