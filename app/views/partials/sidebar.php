@@ -1,9 +1,10 @@
+<!-- app/views/partials/sidebar.php -->
 <aside class="sidebar">
     <div class="profile-section">
         <div class="profile-pic">
-            <img src="<?= BASE_URL ?>public/assets/images/uploads/<?= htmlspecialchars($profilePicture); ?>" alt="Profile Picture">
+            <img src="<?= BASE_URL ?>public/assets/images/uploads/<?= htmlspecialchars($_SESSION['profile_picture'] ?? 'default_profile.jpg'); ?>" alt="Profile Picture">
         </div>
-        <p><?= htmlspecialchars($username); ?></p>
+        <p><?= htmlspecialchars($_SESSION['username'] ?? 'User'); ?></p>
     </div>
 
     <?php 

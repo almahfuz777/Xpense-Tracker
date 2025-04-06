@@ -1,5 +1,5 @@
+<!-- app/controllers/LoginController.php -->
 <?php
-// app/controllers/LoginController.php
 require_once __DIR__ . '/../config/config.php';
 require_once APP_PATH . '/core/Controller.php';
 require_once MODEL_PATH . '/User.php';
@@ -48,6 +48,7 @@ class LoginController extends Controller {
                 // Store user information in session
                 $_SESSION['user_id'] = $user['id'];
                 $_SESSION['username'] = $user['username'];
+                $_SESSION['profile_picture'] = $userModel->getProfilePicture($user['id']);
 
                 if($remember){
                     setcookie("remember_me", $user['id'], [
@@ -63,6 +64,7 @@ class LoginController extends Controller {
                 exit();
             } 
             else {
+                error_log("Login failed for email: $email");
                 $_SESSION['errors'] = ['Invalid email or password!'];
                 header('Location: ' . BASE_URL . 'app/controllers/LoginController.php');
                 exit();
