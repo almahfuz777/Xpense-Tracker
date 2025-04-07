@@ -47,16 +47,17 @@ class AddTransactionController extends Controller {
             $amount = floatval($_POST['amount'] ?? 0);
             $transactionDateTime = $_POST['datetime'] ?? date('Y-m-d H:i:s');
             $createdAt = date('Y-m-d H:i:s');
+            $result = ['success' => false, 'error' => 'Invalid transaction type.'];
 
             if ($type === 'income' || $type === 'expense') {
                 $categoryId = intval($_POST['category_id'] ?? 0);
                 $accountId = intval($_POST['account_id'] ?? 0);
                 if ($categoryId > 0 && $accountId > 0) {
-                    $success = ($type === 'income') 
+                    $result  = ($type === 'income') 
                         ? $transactionModel->addIncome($userId, $accountId, $categoryId, $description, $amount, $transactionDateTime, $createdAt) 
                         : $transactionModel->addExpense($userId, $accountId, $categoryId, $description, $amount, $transactionDateTime, $createdAt);
                 } else {
-                    $success = false;
+                    $result = ['success' => false, 'error' => 'Missing category or account.'];
                 }
             } 
             elseif ($type === 'transfer') {
@@ -64,22 +65,22 @@ class AddTransactionController extends Controller {
                 $toAccountId = intval($_POST['to_account_id'] ?? 0);
                 
                 if ($fromAccountId > 0 && $toAccountId > 0 && $fromAccountId !== $toAccountId) {
-                    $success = $transactionModel->addTransfer($userId, $fromAccountId, $toAccountId, $description, $amount, $transactionDateTime, $createdAt);
+                    $result = $transactionModel->addTransfer($userId, $fromAccountId, $toAccountId, $description, $amount, $transactionDateTime, $createdAt);
                 } else {
-                    $success = false;
+                    $result = ['success' => false, 'error' => 'Missing transfer account information.'];
                 }
             }
             else {
-                $success = false;
+                $result = ['success' => false, 'error' => 'Invalid transaction type.'];
             }
 
-
-            if (!$success) {
-                $_SESSION['alert-error'] = "Error: Transaction unsuccessful!";
-                header('Location: ' . BASE_URL . 'app/controllers/AddTransactionController.php');
-            } else{
+            if ($result['success']) {
                 $_SESSION['alert-success'] = 'Transaction added successfully!';
                 header('Location: ' . BASE_URL . 'app/controllers/TransactionsController.php');
+
+            } else{
+                $_SESSION['alert-error'] = $result['error'] ?? 'Transaction failed.';
+                header('Location: ' . BASE_URL . 'app/controllers/AddTransactionController.php');
             }
             
             exit();

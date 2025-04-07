@@ -11,55 +11,82 @@ class Transaction {
 
     // Add income transaction
     public function addIncome($userId, $accountId, $categoryId, $description, $amount, $transactionDateTime, $createdAt) {
-        if (!$this->validateTransactionData($userId, $accountId, $categoryId, $amount)) {
-            return false;
+        if (!$this->isValidTransaction($userId, $accountId, $categoryId, $amount)) {
+            return ['success' => false, 'error' => 'Invalid transaction data'];
         }
 
-        $transactionDateTime = date('Y-m-d H:i:s', strtotime($transactionDateTime));
+        $transactionDateTime = $this->formatDateTime($transactionDateTime);
 
         $query = "INSERT INTO income (user_id, account_id, category_id, description, amount, transaction_time, created_at) VALUES (?, ?, ?, ?, ?, ?, ?)";
         
-        return $this->executeTransactionQuery(
+        $executed = $this->executeTransactionQuery(
             $query, "iiisdss", $userId, $accountId, $categoryId, $description, $amount, $transactionDateTime, $createdAt
         );
+
+        if ($executed && $this->addToAccount($accountId, $amount)) {
+            return ['success' => true];
+        }
+        return ['success' => false, 'error' => 'Transaction failed'];
     }
 
     // Add expense transaction
     public function addExpense($userId, $accountId, $categoryId, $description, $amount, $transactionDateTime, $createdAt) {
-        if (!$this->validateTransactionData($userId, $accountId, $categoryId, $amount)) {
-            return false;
+        if (!$this->isValidTransaction($userId, $accountId, $categoryId, $amount)) {
+            return ['success' => false, 'error' => 'Invalid transaction data'];
         }
 
-        $transactionDateTime = date('Y-m-d H:i:s', strtotime($transactionDateTime));
+        $balance = $this->getAccountBalance($accountId);
+        if ($balance === false || $balance < $amount) {
+            return ['success' => false, 'error' => 'Insufficient balance'];
+        }
+
+        $transactionDateTime = $this->formatDateTime($transactionDateTime);
 
         $query = "INSERT INTO expense (user_id, account_id, category_id, description, amount, transaction_time, created_at) VALUES (?, ?, ?, ?, ?, ?, ?)";
         
-        return $this->executeTransactionQuery(
+        $executed = $this->executeTransactionQuery(
             $query, "iiisdss", $userId, $accountId, $categoryId, $description, $amount, $transactionDateTime, $createdAt
         );
+        if ($executed && $this->deductFromAccount($accountId, $amount)) {
+            return ['success' => true];
+        }
+        return ['success' => false, 'error' => 'Transaction failed'];
     }
 
     // Add transfer transaction
     public function addTransfer($userId, $fromAccountId, $toAccountId, $description, $amount, $transactionDateTime, $createdAt) {
-        if (!$this->validateTransactionData($userId, $fromAccountId, $toAccountId, $amount)) {
-            return false;
+        if (!$this->isValidTransaction($userId, $fromAccountId, $toAccountId, $amount)) {
+            return ['success' => false, 'error' => 'Invalid transfer data'];
         }
 
         if ($fromAccountId === $toAccountId) {
-            return false; // Prevent self-transfer
+            return ['success' => false, 'error' => 'Cannot transfer to the same account'];
         }
 
-        $transactionDateTime = date('Y-m-d H:i:s', strtotime($transactionDateTime));
+        $balance = $this->getAccountBalance($fromAccountId);
+        if ($balance === false || $balance < $amount) {
+            return ['success' => false, 'error' => 'Insufficient balance'];
+        }
+
+        $transactionDateTime = $this->formatDateTime($transactionDateTime);
 
         $query = "INSERT INTO transfer (user_id, from_account_id, to_account_id, description, amount, transaction_time, created_at) VALUES (?, ?, ?, ?, ?, ?, ?)";
         
-        return $this->executeTransactionQuery(
+        $executed = $this->executeTransactionQuery(
             $query, "iiisdss", $userId, $fromAccountId, $toAccountId, $description, $amount, $transactionDateTime, $createdAt
         );
+
+        if ($executed && 
+            $this->deductFromAccount($fromAccountId, $amount) && 
+            $this->addToAccount($toAccountId, $amount)
+        ){
+            return ['success' => true];
+        }
+        return ['success' => false, 'error' => 'Transfer failed'];
     }
 
     // Validate transaction data
-    private function validateTransactionData($userId, $accountId, $categoryId, $amount) {
+    private function isValidTransaction($userId, $accountId, $categoryId, $amount) {
         return !empty($userId) && !empty($accountId) && ($categoryId !== null || $categoryId === 0) && $amount > 0;
     }
 
@@ -84,6 +111,45 @@ class Transaction {
 
         $stmt->close();
         return $success;
+    }
+
+    private function formatDateTime($datetime) {
+        return date('Y-m-d H:i:s', strtotime($datetime));
+    }
+
+    // Add balance to an account
+    private function addToAccount($accountId, $amount) {
+        $stmt = $this->conn->prepare("UPDATE accounts SET balance = balance + ? WHERE id = ?");
+        if (!$stmt) return false;
+        $stmt->bind_param("di", $amount, $accountId);
+        $success = $stmt->execute();
+        $stmt->close();
+        return $success;
+    }
+
+    // Deduct balance from an account
+    private function deductFromAccount($accountId, $amount) {
+        $stmt = $this->conn->prepare("UPDATE accounts SET balance = balance - ? WHERE id = ?");
+        if (!$stmt) return false;
+        $stmt->bind_param("di", $amount, $accountId);
+        $success = $stmt->execute();
+        $stmt->close();
+        return $success;
+    }
+
+    // Fetch current balance of an account
+    public function getAccountBalance($accountId) {
+        $stmt = $this->conn->prepare("SELECT balance FROM accounts WHERE id = ?");
+        if (!$stmt) return false;
+
+        $stmt->bind_param("i", $accountId);
+        $stmt->execute();
+        $balance = 0;
+        $stmt->bind_result($balance);
+        $stmt->fetch();
+        $stmt->close();
+
+        return $balance;
     }
     
     // Fetch transactions by type (income, expense, transfer)
@@ -156,7 +222,8 @@ class Transaction {
         return $transactions;
     }
 
-    public function getRecentTransactions($userId, $limit = 3) {
+    // Fetch recent transactions for a user
+    public function getRecentTransactions($userId, $limit) {
         $transactions = [];
     
         $query = "
@@ -214,9 +281,6 @@ class Transaction {
         return $transactions;
     }
     
-    
-    
-
     // Get total income or expense for a user
     public function getTotalAmount($userId, $period, $type) {
         // Ensure valid table selection
@@ -238,7 +302,8 @@ class Transaction {
             error_log("SQL Error: " . $this->conn->error);
             return 0;
         }
-            
+        
+        $totalAmount = null;
         $stmt->bind_param("i", $userId);
         $stmt->execute();
         $stmt->bind_result($totalAmount);
