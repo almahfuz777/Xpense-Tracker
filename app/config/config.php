@@ -33,3 +33,7 @@ ini_set('display_errors', 1);
 
 // // Set Default Timezone
 // date_default_timezone_set('UTC');
+
+// API Keys
+define('EXCHANGE_API_KEY', 'your_api_key_here');
+define('EXCHANGE_API_URL', 'https://v6.exchangerate-api.com/v6/' . EXCHANGE_API_KEY . '/latest/');

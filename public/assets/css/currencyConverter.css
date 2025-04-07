@@ -1,0 +1,84 @@
+/* -------------- Container Layout -------------- */
+.currency-converter-container {
+    flex-direction: row;
+    gap: 1.25rem;
+}
+
+.content-area {
+    flex-grow: 1;
+    background: var(--accent-bg);
+    color: var(--text-color);
+    text-align: center;
+    padding: 1.5rem;
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
+    width: 100%;
+    margin: 0 auto;
+}
+
+.content-area h1 {
+    margin-bottom: 1.25rem;
+}
+
+.currency-form {
+    margin: 1rem 0;
+    text-align: left;
+    font-size: 1rem;
+}
+
+.currency-form label {
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: var(--text-muted);
+    margin-bottom: .5rem;
+    display: block;
+}
+
+.currency-form select, 
+.currency-form input[type="number"] {
+    width: 100%;
+    padding: 0.5rem;
+    margin-bottom: 1rem;
+    border-radius: .25rem;
+    border: 1px solid var(--text-muted);
+    font-size: 1rem;
+    background-color: var(--accent-bg);
+    color: var(--text-color);
+}
+
+.currency-form select:focus,
+.currency-form input[type="number"]:focus {
+    outline: none;
+    border-color: var(--btn-color);
+    box-shadow: 0 0 5px rgba(26, 188, 156, 0.5);
+}
+
+.currency-form button {
+    width: 100%;
+    padding: 0.5rem;
+    background: var(--btn-color);
+    color: var(--text-color);
+    font-size: 1rem;
+    border: none;
+    border-radius: .25rem;
+    cursor: pointer;
+    transition: background var(--transition-speed);
+}
+
+.currency-form button:hover {
+    background: var(--btn-hover);
+}
+
+.currency-result {
+    margin-top: 1.25rem;
+    font-size: 1.125rem;
+    font-weight: bold;
+    color: var(--text-green);
+}
+
+#conversion-loading {
+    font-size: 1rem;
+    color: var(--text-muted);
+    text-align: center;
+    margin-bottom: 1rem;
+}
