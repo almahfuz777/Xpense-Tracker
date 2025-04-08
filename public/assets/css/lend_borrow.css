@@ -1,0 +1,166 @@
+/* ================= Container Layout ============== */
+.lend-borrow-container {
+    flex-direction: row;
+    gap: 1.25rem;
+}
+
+.content-area {
+    flex-grow: 1;
+    background: var(--accent-bg);
+    color: var(--text-color);
+    text-align: center;
+    padding: 1.5rem;
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
+    width: 100%;
+    margin: 0 auto;
+}
+
+/* Headings */
+.content-area h1 {
+    margin-bottom: 1.25rem;
+}
+
+.content-area h2 {
+    font-size: 1.25rem;
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+}
+
+/* ================= Table Styling ============== */
+.lend-borrow-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1rem;
+    font-size: 1rem;
+}
+
+.lend-borrow-table thead {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+}
+
+.lend-borrow-table th, .lend-borrow-table td {
+    padding: 0.5rem;
+    border: 0.0625rem solid var(--text-muted);
+    text-align: left;
+}
+
+.lend-borrow-table th {
+    background: var(--tab-hover);
+    color: var(--text-color);
+    font-weight: 600;
+}
+
+.lend-borrow-table tbody tr:nth-child(even) {
+    background: var(--secondary-bg);
+}
+
+/* Check Button (Mark as closed) */
+.check-btn {
+    background-color: var(--btn-color);
+    color: #fff;
+    border: none;
+    padding: 0.4rem 0.75rem;
+    font-size: 1rem;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    transition: background var(--transition-speed);
+}
+
+.check-btn:hover {
+    background-color: var(--btn-hover);
+}
+
+/* Closed Section */
+.closed-section {
+    margin-top: 1.5rem;
+    background: var(--secondary-bg);
+    border: 0.0625rem solid var(--text-muted);
+    padding: 1rem;
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
+}
+
+.closed-section summary {
+    font-weight: 600;
+    font-size: 1.05rem;
+    cursor: pointer;
+    padding: 0.25rem 0;
+}
+
+/* ================= Add Entry Form ============== */
+.add-lend-borrow-form {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    justify-content: center;
+    background: var(--secondary-bg);
+    padding: 1.25rem;
+    box-shadow: var(--shadow);
+    margin-top: 1rem;
+    border: 0.0625rem solid var(--text-muted);
+}
+
+.add-lend-borrow-form select,
+.add-lend-borrow-form input[type="text"],
+.add-lend-borrow-form input[type="number"] {
+    padding: 0.625rem;
+    border: 0.0625rem solid var(--text-muted);
+    border-radius: var(--border-radius);
+    background: var(--accent-bg);
+    color: var(--text-color);
+    font-size: 1rem;
+    transition: border-color var(--transition-speed);
+}
+
+.add-lend-borrow-form select:focus,
+.add-lend-borrow-form input[type="text"]:focus,
+.add-lend-borrow-form input[type="number"]:focus {
+    outline: none;
+    border-color: var(--btn-color);
+    box-shadow: 0 0 5px rgba(26, 188, 156, 0.5);
+}
+
+.add-lend-borrow-form input[type="submit"] {
+    background-color: var(--btn-color);
+    color: #fff;
+    border: none;
+    padding: 0.75rem;
+    font-size: 1rem;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    transition: background var(--transition-speed);
+}
+
+.add-lend-borrow-form input[type="submit"]:hover {
+    background-color: var(--btn-hover);
+}
+
+/* Type-based row coloring */
+.lend-row {
+    background-color: rgba(46, 204, 113, 0.1); /* green tint */
+}
+
+.borrow-row {
+    background-color: rgba(231, 76, 60, 0.1); /* red tint */
+}
+
+/* Optional: badge style inside cell */
+.type-badge {
+    display: inline-block;
+    padding: 0.25rem 0.5rem;
+    border-radius: var(--border-radius);
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+
+.lend-badge {
+    background-color: var(--text-green);
+    color: white;
+}
+
+.borrow-badge {
+    background-color: var(--text-red);
+    color: white;
+}
