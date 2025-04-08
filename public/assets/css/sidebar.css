@@ -46,7 +46,9 @@
 .profile-pic {
     width: 80px;
     height: 80px;
+    object-fit: cover;
     border-radius: 50%;
+    border: 2px solid var(--text-muted);
     overflow: hidden;
     margin: 0 auto 15px;
 }

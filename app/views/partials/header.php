@@ -32,7 +32,7 @@
                 <li><a href="app/controllers/LoginController.php">Login</a></li>
                 <li><a href="app/controllers/SignupController.php">Sign Up</a></li>
             <?php else: ?>
-                <li><a href="#">Profile</a></li>
+                <li><a href="app/controllers/ProfileController.php">Profile</a></li>
                 <li><a href="app/controllers/LogoutController.php">Logout</a></li>        
             <?php endif; ?>
         </ul>

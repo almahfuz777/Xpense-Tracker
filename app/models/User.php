@@ -1,5 +1,5 @@
-<!-- app/models/User.php -->
 <?php
+// app/models/User.php
 require_once APP_PATH . '/core/Database.php';
 
 class User{
@@ -116,6 +116,23 @@ class User{
     }
 
 
+    
+    public function getProfile($userId) {
+        $stmt = $this->conn->prepare("
+            SELECT 
+                u.email,
+                up.fname, up.lname, up.gender, up.date_of_birth, 
+                up.profile_picture, up.phone, up.address
+            FROM users u
+            LEFT JOIN user_profiles up ON u.id = up.user_id
+            WHERE u.id = ?
+        ");
+        $stmt->bind_param("i", $userId);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        return $result->fetch_assoc();
+    }
+
     public function getUserById($id){
         $stmt = $this->conn->prepare("SELECT id, username FROM users WHERE id = ?");
         if (!$stmt) return false;
@@ -144,5 +161,13 @@ class User{
         return $profilePicture ?: 'default_profile.jpg';
     }
 
+    public function updateProfileField($userId, $field, $value) {
+        $stmt = $this->conn->prepare("UPDATE user_profiles SET $field = ?, updated_at = NOW() WHERE user_id = ?");
+        if (!$stmt) return false;
+        $stmt->bind_param("si", $value, $userId);
+        $result = $stmt->execute();
+        $stmt->close();
+        return $result;
+    }
 }
 ?>

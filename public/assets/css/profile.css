@@ -1,0 +1,90 @@
+.profile-container{
+    flex-direction: row;
+    gap: 1.25rem;
+}
+
+.content-area {
+    flex-grow: 1;
+    background: var(--accent-bg);
+    color: var(--text-color);
+    text-align: center;
+    padding: 1.5rem;
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
+    width: 100%;
+    margin: 0 auto;
+}
+
+.content-area h1 {
+    margin-bottom: 1.25rem;
+}
+
+.profile-card {
+    background: var(--accent-bg);
+    padding: 2rem;
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.profile-pic-container {
+    margin-bottom: 1.5rem;
+}
+
+.profile-picture {
+    width: 120px;
+    height: 120px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 2px solid var(--text-muted);
+    margin-bottom: 0.5rem;
+}
+
+.profile-info {
+    text-align: left;
+}
+
+.profile-info p, .editable-field {
+    margin: 0.75rem 0;
+}
+
+.fixed-fields{
+    margin-bottom: 1.5rem;
+}
+.editable-field {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap;;
+}
+.editable-field span,
+.editable-field input{
+    text-align: right;
+    flex: 1;
+}
+
+.field-input {
+    padding: 0.4rem 0.6rem;
+    font-size: 1rem;
+    border-radius: var(--border-radius);
+    border: 1px solid var(--text-muted);
+    display: none;
+}
+
+.edit-btn,
+.save-btn {
+    background: var(--btn-color);
+    color: white;
+    border: none;
+    padding: 0.3rem 0.6rem;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    font-size: 0.9rem;
+}
+
+.edit-btn:hover,
+.save-btn:hover {
+    background: var(--btn-hover);
+}
