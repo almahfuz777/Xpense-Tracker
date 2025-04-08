@@ -425,6 +425,33 @@ class Transaction {
     
         return $transactions;
     }
+
+    public function getCashFlowByDate($userId, $days = 30) {
+        $query = "
+            SELECT DATE(transaction_time) AS date, SUM(amount) AS amount, 'income' AS type
+            FROM income
+            WHERE user_id = ? AND transaction_time >= DATE_SUB(CURDATE(), INTERVAL ? DAY)
+            GROUP BY DATE(transaction_time)
+            UNION ALL
+            SELECT DATE(transaction_time), SUM(amount), 'expense'
+            FROM expense
+            WHERE user_id = ? AND transaction_time >= DATE_SUB(CURDATE(), INTERVAL ? DAY)
+            GROUP BY DATE(transaction_time)
+        ";
+    
+        $stmt = $this->conn->prepare($query);
+        $stmt->bind_param("iiii", $userId, $days, $userId, $days);
+        $stmt->execute();
+        $result = $stmt->get_result();
+    
+        $flow = [];
+        while ($row = $result->fetch_assoc()) {
+            $flow[] = $row;
+        }
+    
+        return $flow;
+    }
+    
     
 }
 ?>

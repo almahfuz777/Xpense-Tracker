@@ -1,0 +1,45 @@
+.analytics-container {
+    flex-direction: row;
+    gap: 1.25rem;
+}
+
+.content-area {
+    flex-grow: 1;
+    background: var(--accent-bg);
+    color: var(--text-color);
+    text-align: center;
+    padding: 1.5rem;
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
+    width: 100%;
+    margin: 0 auto;
+}
+
+.content-area h1 {
+    margin-bottom: 1.25rem;
+}
+
+.chart-card {
+    background: var(--accent-bg);
+    padding: 1.5rem;
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
+    margin: 2rem auto;
+    max-width: 800px;
+    width: 100%;
+    text-align: center;
+}
+
+.chart-card h2 {
+    font-size: 1.25rem;
+    margin-bottom: 1rem;
+    color: var(--text-color);
+}
+
+.chart-card canvas {
+    max-width: 100%;
+    height: auto;
+    margin: 0 auto;
+    display: block;
+    max-height: 250px;
+}
