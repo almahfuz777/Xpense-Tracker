@@ -64,6 +64,19 @@
     background: var(--btn-hover);
 }
 
+.filters input[type="date"],
+.filters input[type="number"],
+.filters select {
+    padding: 0.5rem 0.75rem;
+    border: 1px solid var(--text-muted);
+    background: var(--secondary-bg);
+    color: var(--text-color);
+    outline: none;
+    font-size: 1rem;
+    transition: border-color var(--transition-speed);
+    /* min-width: 130px; */
+}
+
 /* Transactions Table */
 .transactions-table {
     width: 100%;

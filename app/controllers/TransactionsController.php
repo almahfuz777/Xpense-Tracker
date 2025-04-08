@@ -1,5 +1,5 @@
-<!-- app/controllers/TransactionsController.php -->
 <?php
+// app/controllers/TransactionsController.php
 require_once __DIR__ . '/../config/config.php';
 require_once APP_PATH . '/core/Controller.php';
 require_once MODEL_PATH . '/Transaction.php';
@@ -10,7 +10,10 @@ class TransactionsController extends Controller {
         $this -> requireLogin();
 
         $transactionModel = $this->loadModel('Transaction');
+        $categoryModel = $this->loadModel('Category');
+
         $userId = $_SESSION['user_id'];
+        $categories = $categoryModel->getAllCategories($userId);
 
         // Check if a filter is applied
         $filterType = $_GET['type'] ?? 'all';
@@ -25,12 +28,34 @@ class TransactionsController extends Controller {
             'pageTitle' => 'Transactions | Xpense-Tracker',
             'page' => 'transactions',
             'transactions' => $transactions,
-            'filterType' => $filterType
+            'filterType' => $filterType,
+            'categories' => $categories,
         ];
 
         // Load the homepage view
         $this->loadView('dashboard/transactions', $data);
     }
+
+    public function fetch() {
+        $this->requireLogin();
+        $transactionModel = $this->loadModel('Transaction');
+        $userId = $_SESSION['user_id'];
+    
+        $type = $_POST['type'] ?? 'all';
+        $search = $_POST['search'] ?? '';
+        $category = $_POST['category'] ?? '';
+        $startDate = $_POST['startDate'] ?? '';
+        $endDate = $_POST['endDate'] ?? '';
+        $minAmount = $_POST['minAmount'] ?? '';
+        $maxAmount = $_POST['maxAmount'] ?? '';
+    
+        $transactions = $transactionModel->getFilteredTransactions($userId, $type, $search, $category, $startDate, $endDate, $minAmount, $maxAmount);
+    
+        header('Content-Type: application/json');
+        echo json_encode($transactions);
+        exit;
+    }
+    
 }
 
 // Instantiate and dispatch the controller

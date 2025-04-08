@@ -22,12 +22,33 @@
 
         <!-- Filter and Search -->
         <div class="filters">
-            <input type="text" id="search" placeholder="Search transactions..." onkeyup="filterTransactions()">
+            <!-- Search input -->
+            <input type="text" id="search" placeholder="Search transactions...">
 
-            <a href="?type=all" class="filter-btn <?= ($filterType === 'all') ? 'active' : ''; ?>">All</a>
-            <a href="?type=income" class="filter-btn <?= ($filterType === 'income') ? 'active' : ''; ?>">Income</a>
-            <a href="?type=expense" class="filter-btn <?= ($filterType === 'expense') ? 'active' : ''; ?>">Expense</a>
-            <a href="?type=transfer" class="filter-btn <?= ($filterType === 'transfer') ? 'active' : ''; ?>">Transfer</a>
+            <!-- Filter buttons -->
+            <a href="#" data-type="all" class="filter-btn active">All</a>
+            <a href="#" data-type="income" class="filter-btn">Income</a>
+            <a href="#" data-type="expense" class="filter-btn">Expense</a>
+            <a href="#" data-type="transfer" class="filter-btn">Transfer</a>
+        
+            <!-- Category -->
+            <select id="category">
+                <option value="">All Categories</option>
+                <?php foreach ($categories as $cat): ?>
+                    <option value="<?= htmlspecialchars($cat['id']) ?>">
+                        <?= htmlspecialchars($cat['category_name']) ?>
+                    </option>
+                <?php endforeach; ?>
+            </select>
+
+            <!-- Date/Amount Range -->
+            <div class="new">
+                <input type="date" id="start-date" placeholder="Start date">
+                <input type="date" id="end-date" placeholder="End date">
+                
+                <input type="number" id="min-amount" placeholder="Min amount" min="0" step="0.01">
+                <input type="number" id="max-amount" placeholder="Max amount" min="0" step="0.01">
+            </div>
         </div>
 
         <!-- Transactions Table -->
@@ -90,6 +111,7 @@
     </section>
 </main>
 
+<script> const BASE_URL = "<?= BASE_URL ?>"; </script>
 <script src="<?= BASE_URL ?>public/assets/js/transactions.js"></script>
 
 <?php include VIEW_PATH . '/partials/footer.php'; ?>

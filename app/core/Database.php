@@ -1,5 +1,5 @@
-<!-- app/core/Database.php -->
 <?php
+// app/core/Database.php
 class Database {
     private static $instance = null;
     private $conn;
