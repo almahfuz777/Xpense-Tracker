@@ -7,81 +7,160 @@
 /* Dashboard Content */
 .dashboard-content {
     flex-grow: 1;
-    background: #EDEFEF;
+    background: var(--accent-bg);
+    color: var(--text-color);
     padding: 1.5rem;
-    border-radius: 0.5rem;
-    box-shadow: 0 0.25rem 0.5rem rgba(0, 0, 0, 0.1);
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
+    width: 100%;
+    margin: 0 auto;
 }
 
 /* -------------- Balance & Accounts -------------- */
 .balance-section {
-    display: flex;
-    justify-content: space-between;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     gap: 1rem;
-    flex-wrap: wrap;
+    justify-content: center;
 }
 .stat-box {
-    background: var(--bg-light);
+    background: var(--primary-bg);
     color: var(--text-color);
     padding: 1.5rem;
-    border-radius: 0.5rem;
-    width: 23%;
+    border-radius: var(--border-radius);
+    flex: 1; 
     text-align: center;
-    box-shadow: 0 0.125rem 0.3125rem rgba(0, 0, 0, 0.1);
+    box-shadow: var(--shadow);
+    transition: box-shadow 0.2s ease;
+}
+.stat-box h3{
+    font-size: 1.1rem;
+    margin-bottom: 0.25rem;
+}
+.stat-box p{
+    font-weight: bold;
+    font-size: 1.2rem;
+}
+.stat-box:hover {
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
 }
 
+.stat-box:first-child {
+    background: var(--tab-hover);
+}
+#add-account-box{
+    background: rgba(255, 255, 255, 0.1);
+    /* color: var(--btn-color); */
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background var(--transition-speed), color var(--transition-speed);
+}
+#add-account-box:hover {
+    background: var(--btn-hover);
+    color: var(--text-color);
+}
+
+.stat-box-link {
+    text-decoration: none;
+    color: var(--text-color);
+    display: inline-block;
+}
+
+@media (max-width: 768px) {
+    .balance-section {
+        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    }
+    .stat-box {
+        padding: 1rem;
+    }
+    .stat-box h3 {
+        font-size: 1rem;
+    }
+    .stat-box p {
+        font-size: 1rem;
+    }
+}
 /* -------------- Cash Flow Section -------------- */
 .cash-flow {
+    /* display: flex; */
+    /* justify-content: space-between; */
+    /* align-items: center; */
+    background: var(--secondary-bg);
+    color: var(--text-color);
+    padding: 1.5rem;
+    border-radius: var(--border-radius);
+    /* gap: 1.5rem; */
+    margin: 1.5rem 0;
+    box-shadow: var(--shadow);
+}
+
+/* -------------- Individual Columns -------------- */
+/* Header - Title & Select Dropdown */
+.cash-flow-header{
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background: #ecf0f1;
-    color: black;
-    padding: 1.5rem;
-    border-radius: 0.5rem;
-    gap: 1.5rem;
-    margin: 1.5rem 0;
-    box-shadow: 0 0.25rem 0.5rem rgba(0, 0, 0, 0.1);
+    margin-bottom: 1rem;
+    padding: 0 2rem;
 }
-/* -------------- Individual Columns -------------- */
+.cash-flow-header h3 {
+    font-size: 1.25rem;
+    font-weight: 600;
+}
+.cash-flow-header select {
+    padding: 0.5rem;
+    border-radius: 0.25rem;
+    border: 1px solid #ccc;
+    background: var(--primary-bg);
+    color: var(--text-color);
+}
+
+/* Main Content - Income & Expense */
+.cash-flow-content {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+}
+
 .cash-flow-column {
     flex: 1;
     text-align: center;
-    padding: 1rem;
-    border-radius: 0.5rem;
+    padding: 1.5rem;
+    border-radius: var(--border-radius);
+    font-weight: 600;
+    transition: box-shadow 0.3s ease;
 }
-/* Title + Select Dropdown */
-.cash-flow-title {
-    background: #F0EFE7;
-}
-.cash-flow-title h3 {
-    margin-bottom: 0.5rem;
-}
-.cash-flow-title select {
-    padding: 0.5rem;
-    font-size: 1rem;
-    border-radius: 0.3125rem;
-    border: 1px solid #ddd;
-    background: white;
-    color: black;
-}
-/* Income Column */
-.cash-flow-income {
-    background: rgba(46, 204, 113, 0.2);
-    color: var(--btn-color);
+.cash-flow-column:hover {
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.2);
 }
 
-/* Expense Column */
-.cash-flow-expense {
-    background: rgba(231, 76, 60, 0.2);
-    color: #e74c3c;
+.cash-flow-income {
+    background: var(--green-bg);
+    color: var(--text-green);
 }
+.cash-flow-expense {
+    background: var(--red-bg);
+    color: var(--text-red);
+}
+
 /* Cash Amount Styling */
 .cash-amount {
     font-size: 1.75rem;
     font-weight: bold;
 }
 
+@media (max-width: 768px) {
+    .cash-flow-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+    }
+    .cash-flow-content {
+        flex-direction: column;
+    }
+}
 /* -------------- Pie Chart -------------- */
 canvas {
     width: 100% !important;
@@ -94,44 +173,54 @@ canvas {
     margin-top: 1.25rem;
 }
 .recent-transactions h3 {
-    color: var(--bg-color);
+    color: var(--text-color);
     margin-bottom: 0.625rem;
 }
 table {
     width: 100%;
     border-collapse: collapse;
+    background: var(--secondary-bg);
+    /* color: var(--text-color); */
+    border-radius: var(--border-radius);
+    overflow: hidden;
 }
 table th, table td {
     padding: 0.75rem;
-    border: 1px solid #ddd;
+    border: 1px solid var(--accent-bg);
     text-align: left;
-    color: black;
+    font-size: 1rem;
+    color: var(--text-color);
 }
 table th {
-    background: var(--bg-color);
-    color: white;
+    background: var(--tab-hover);
+    color: var(--text-color);
+    font-weight: bold;
 }
 table tr:nth-child(even) {
-    background: #f8f9fa;
+    background: var(--primary-bg);
 }
 table tr:hover {
-    background: #e9ecef;
+    background: rgba(255, 255, 255, 0.1);
 }
+
+/* Transaction Type Colors */
 .income {
-    color: #1abc9c;
-    font-weight: bold;
+    color: var(--text-green);
 }
 .expense {
-    color: #e74c3c;
-    font-weight: bold;
+    color: var(--text-red);
 }
+
+/* See More Transactions Link */
 .see-more {
     display: inline-block;
     margin-top: 0.625rem;
     color: var(--btn-color);
     text-decoration: none;
     font-weight: bold;
+    transition: color var(--transition-speed);
 }
 .see-more:hover {
     text-decoration: underline;
+    color: var(--btn-hover);
 }

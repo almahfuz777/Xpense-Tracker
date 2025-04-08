@@ -1,5 +1,5 @@
-<!-- app/models/Account.php -->
 <?php
+// app/models/Account.php
 require_once APP_PATH . '/core/Database.php';
 
 class Account {

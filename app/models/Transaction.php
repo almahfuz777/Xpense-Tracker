@@ -313,6 +313,35 @@ class Transaction {
         return $transactions;
     }
 
+    public function getExpenseBreakdown($userId, $period = 'month') {
+        $dateFilter = "AND e.transaction_time >= DATE_SUB(NOW(), INTERVAL 1 MONTH)";
+        if ($period === 'week') {
+            $dateFilter = "AND e.transaction_time >= DATE_SUB(NOW(), INTERVAL 7 DAY)";
+        } elseif ($period === 'year') {
+            $dateFilter = "AND e.transaction_time >= DATE_SUB(NOW(), INTERVAL 1 YEAR)";
+        }
+    
+        $query = "
+            SELECT c.category_name, SUM(e.amount) as total
+            FROM expense e
+            JOIN categories c ON e.category_id = c.id
+            WHERE e.user_id = ? $dateFilter
+            GROUP BY c.category_name
+            ORDER BY total DESC
+        ";
+    
+        $stmt = $this->conn->prepare($query);
+        $stmt->bind_param("i", $userId);
+        $stmt->execute();
+        $result = $stmt->get_result();
+    
+        $breakdown = [];
+        while ($row = $result->fetch_assoc()) {
+            $breakdown[] = $row;
+        }
+        return $breakdown;
+    }    
+
     public function getFilteredTransactions($userId, $type, $search, $category, $startDate, $endDate, $minAmount, $maxAmount) {
         $search = '%' . $this->conn->real_escape_string($search) . '%';
         $transactions = [];
