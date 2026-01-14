@@ -64,7 +64,7 @@ By using this clear folder structure, the application remains organized, maintai
 ![Database Schema](public/assets/images/readme/db-schema.png)
 
 
-## 🔐 Security Measuers
+## 🔐 Security Measures
 
 - Password hashing using bcrypt
 - Prepared statements (SQL Injection prevention)
